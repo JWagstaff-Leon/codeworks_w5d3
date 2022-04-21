@@ -8,7 +8,27 @@ class HabitationsService
         const found = await dbContext.Habitations.findById(id);
         if(!found)
         {
-            throw new BadRequest(`Habitation with id ${id} not found.`)
+            throw new BadRequest(`Habitation with id ${id} not found.`);
+        }
+        return found;
+    }
+
+    async getByPlanetID(planetID)
+    {
+        const found = await dbContext.Habitations.findOne({planetID: planetID}).populate("species");
+        if(!found)
+        {
+            throw new BadRequest(`Habitation with planetID ${planetID} not found.`);
+        }
+        return found;
+    }
+
+    async getBySpeciesID(speciesID)
+    {
+        const found = await dbContext.Habitations.findOne({speciesID: speciesID}).populate("planets");
+        if(!found)
+        {
+            throw new BadRequest(`Habitation with speciesID ${speciesID} not found.`);
         }
         return found;
     }

@@ -11,3 +11,21 @@ export const HabitationSchema = new Schema(
         toJSON: { virtuals: true }
     }
 );
+
+HabitationSchema.virtual("species",
+    {
+        localField: "speciesID",
+        foreignField: "_id",
+        ref: "Species",
+        justOne: true
+    }
+)
+
+HabitationSchema.virtual("planets",
+    {
+        localField: "planetID",
+        foreignField: "_id",
+        ref: "Planet",
+        justOne: true
+    }
+)

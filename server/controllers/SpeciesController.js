@@ -1,3 +1,4 @@
+import { habitationsService } from "../services/HabitationsService.js";
 import { speciesService } from "../services/SpeciesService.js";
 import BaseController from "../utils/BaseController.js";
 
@@ -10,6 +11,7 @@ export class SpeciesController extends BaseController
         this.router
             .get("", this.getAll)
             .get("/:id", this.getByID)
+            .get("/:id/planets", this.getHabitationsbySpecies)
             .post("", this.create)
             .put("/:id", this.edit)
             .delete("/:id", this.remove);
@@ -37,6 +39,18 @@ export class SpeciesController extends BaseController
         {
             next(error);
         }
+    }
+
+    async getHabitationsbySpecies(req, res, next)
+    {
+       try
+       {
+           return res.send(await habitationsService.getBySpeciesID(req.params.id));
+       }
+       catch(error)
+       {
+           next(error);
+       }
     }
 
     async create(req, res, next)
